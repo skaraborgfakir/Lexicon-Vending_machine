@@ -1,0 +1,8 @@
+@startuml
+IVending <|
+Produkttyper <|-- Dricka
+Produkttyper <|-- Mellanmål
+Produkttyper <|-- Choklad
+Produkttyper <|-- Leksak
+Leksak       <|-- Lego
+@enduml
