@@ -1,14 +1,8 @@
 using System;
 using Xunit;
+using Vending_machine.produkttyper;
 
 namespace vending_machine_xUnit_provning
 {
-    public class UnitTest1
-    {
-        [Fact]
-        public void Test1()
-        {
 
-        }
-    }
 }

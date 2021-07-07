@@ -1,5 +1,6 @@
 using System;
 
-namespace Vending_machine.produkttyper
-{
+namespace Vending_machine.produkttyper {
+    class virtual Product {
+    }
 }
