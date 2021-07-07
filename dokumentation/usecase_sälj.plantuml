@@ -8,17 +8,10 @@ package Varuautomat {
   usecase "Slutför transaktionen"  as slutför_transaktionen
   usecase "Återfå växel"           as återfå_växel
   usecase "Enbart i fasta valörer" as enbart_hela_valörer_hanteras
-  usecase "Underhåll"              as underhåll
-  usecase "Påfyllning"             as påfyllning
-  usecase "Tömma kontanter"        as tömma_kontanter
-  usecase "Fylla på växelmynt"     as växelmynt
   usecase "Mata in mynt"           as mata_in_mynt
   usecase "Mata in sedlar"         as mata_in_sedlar
   usecase "Saldo debiteras"        as saldo_debiteras
   usecase "Saldo krediteras"       as saldo_krediteras
-}
-package Personal {
-  actor Tekniker as t
 }
 k --> (mata_in_kontanter)
 mata_in_kontanter	<|-- mata_in_mynt
@@ -32,8 +25,4 @@ k --> (slutför_transaktionen)
 (slutför_transaktionen) .> (återfå_växel) : include
 (återfå_växel) .>          (enbart_hela_valörer_hanteras) : include
 (återfå_växel) .>          (saldo_debiteras) :include
-t --> (underhåll)
-(underhåll)    .>          (påfyllning) : include
-t -> (tömma_kontanter)
-t -> (växelmynt)
 @enduml

@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+package Varuautomat {
+  usecase "Underhåll"              as underhåll
+  usecase "Påfyllning"             as påfyllning
+  usecase "Tömma kontanter"        as tömma_kontanter
+  usecase "Fylla på växelmynt"     as växelmynt
+}
+package Personal {
+  actor Tekniker as t
+}
+t --> (underhåll)
+(underhåll)    .>          (påfyllning) : include
+t -> (tömma_kontanter)
+t -> (växelmynt)
+@enduml
