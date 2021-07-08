@@ -1,0 +1,8 @@
+@startuml
+component provning
+component Kontroller
+@enduml
+
+# Local Variables:
+# compile-command: "/usr/bin/plantuml -tpng ./testning.plantuml"
+# End:

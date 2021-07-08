@@ -1,0 +1,23 @@
+@startuml
+frame Varuautomat.xUnit-provning {
+interface         xUnit
+xUnit           : Arrange
+xUnit           : Act
+xUnit           : Assert
+abstract          xUnitprov
+xUnit        <|.. xUnitprov
+xUnitprov    <|-- Produkttyperprov
+xUnitprov    <|-- Kontrollantprov
+Produkttyperprov <|-- Dricka
+Produkttyperprov <|-- Mellanmål
+Produkttyperprov <|-- Choklad
+Produkttyperprov <|-- Leksak
+Leksak           <|-- Lego
+Produkttyperprov : HarPris()
+Produkttyperprov : HarBeskrivning()
+}
+@enduml
+
+# Local Variables:
+# compile-command: "/usr/bin/plantuml -tpng ./testning.plantuml"
+# End:
