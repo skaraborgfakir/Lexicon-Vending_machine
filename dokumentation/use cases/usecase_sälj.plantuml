@@ -5,6 +5,7 @@ package Varuautomat {
   usecase "Mata in kontanter"      as mata_in_kontanter
   usecase "Välj produkt"           as välj_produkt
   usecase "Produkt lämnas ut\nom tillgänglig"      as produkt_matas_ut
+  usecase "Informera om produkt"   as Informera_om_produkt
   usecase "Slutför transaktionen"  as slutför_transaktionen
   usecase "Återfå växel"           as återfå_växel
   usecase "Enbart i fasta valörer" as enbart_hela_valörer_hanteras
@@ -22,6 +23,7 @@ k --> (slutför_transaktionen)
 (mata_in_kontanter) .>     (enbart_hela_valörer_hanteras) : include
 (välj_produkt) .>          (produkt_matas_ut) :include
 (produkt_matas_ut) .>      (saldo_debiteras) :include
+(produkt_matas_ut) .>      (Informera_om_produkt) : include
 (slutför_transaktionen) .> (återfå_växel) : include
 (återfå_växel) .>          (enbart_hela_valörer_hanteras) : include
 (återfå_växel) .>          (saldo_debiteras) :include
