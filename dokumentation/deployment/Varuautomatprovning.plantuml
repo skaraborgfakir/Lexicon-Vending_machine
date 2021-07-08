@@ -1,0 +1,32 @@
+@startuml
+frame    Källaren {
+  actor    Kund1
+  node     Automat2
+}
+
+frame    Lobby {
+  actor    Kund2
+  node     Automat1
+}
+
+frame DC {
+   node     Bokföring
+   database Dagbok
+   node     Logistik
+   database Varulager
+}
+
+Kund1 -- Automat2
+Kund2 -- Automat1
+Automat2 -- Bokföring : hämtar försäljningsuppgifter
+Automat1 -- Bokföring : hämtar försäljningsuppgifter
+Automat2 -- Logistik : inventerar
+Automat1 -- Logistik : inventerar
+Logistik -- Varulager : uppdaterar
+Logistik -- Varulager : påfyllning av automat
+Bokföring -- Dagbok : bokför
+@enduml
+
+# Local Variables:
+# compile-command: "/usr/bin/plantuml -tpng ./Varuautomatprovning.plantuml"
+# End:
