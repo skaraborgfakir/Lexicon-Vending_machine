@@ -1,6 +1,6 @@
 using System;
 
-namespace Vending_machine.produkttyper {
+namespace Varuautomat.Produkter {
     class virtual Product {
     }
 }

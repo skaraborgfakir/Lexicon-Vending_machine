@@ -1,10 +1,10 @@
 using System;
 
-namespace Vending_machine.IVending {
+namespace Varuautomat {
     interface IVending {
-	public Purchase();
-	public ShowAll();
-	public InsertMoney();
-	public EndTransaction();
+	public void ShowAll();
+	public void InsertMoney();
+	public void Purchase();
+	public void EndTransaction();
     }
 }
