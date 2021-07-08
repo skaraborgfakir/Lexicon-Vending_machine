@@ -1,5 +1,9 @@
 @startuml
-IVending <|
+interface         IVending
+class             Object
+abstract          Produkttyper
+Object       <|-- Produkttyper
+IVending     <|.. Produkttyper
 Produkttyper <|-- Dricka
 Produkttyper <|-- Mellanmål
 Produkttyper <|-- Choklad
