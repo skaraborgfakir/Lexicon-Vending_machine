@@ -26,3 +26,7 @@ k --> (slutför_transaktionen)
 (återfå_växel) .>          (enbart_hela_valörer_hanteras) : include
 (återfå_växel) .>          (saldo_debiteras) :include
 @enduml
+
+# Local Variables:
+# compile-command: "/usr/bin/plantuml -tpng ./usecase_sälj.plantuml"
+# End:

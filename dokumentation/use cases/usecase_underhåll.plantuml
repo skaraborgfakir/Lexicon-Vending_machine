@@ -14,3 +14,7 @@ t --> (underhåll)
 t -> (tömma_kontanter)
 t -> (växelmynt)
 @enduml
+
+# Local Variables:
+# compile-command: "/usr/bin/plantuml -tpng ./usecase_underhåll.plantuml"
+# End:

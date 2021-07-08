@@ -6,3 +6,7 @@ Produkttyper <|-- Choklad
 Produkttyper <|-- Leksak
 Leksak       <|-- Lego
 @enduml
+
+# Local Variables:
+# compile-command: "/usr/bin/plantuml -tpng ./ivending.plantuml"
+# End:
