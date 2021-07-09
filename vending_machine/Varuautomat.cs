@@ -1,10 +1,10 @@
 using System;
 with  Varuautomat.Produkter;
-
+with  Varuautomat.Varulager;
 namespace Varuautomat {
     class Varuautomat : IVending {
 	int kundSaldo = 0;
-	Produkt[] varulager;
+
 
 	Varuautomat() {
 	}
