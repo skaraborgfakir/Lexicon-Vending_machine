@@ -1,8 +1,6 @@
 using System;
 using Xunit;
-using Vending_machine.produkttyper;
+using Varuautomat;
 
-namespace vending_machine_xUnit_provning
-{
-
-}
+// namespace Varuautomat.Betalningsmedel_xUnit_provning {
+// }

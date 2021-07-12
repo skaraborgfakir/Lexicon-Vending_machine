@@ -1,9 +1,12 @@
 using System;
-with  Varuautomat.Produkter;
+using Varuautomat.Modell.Produkter;
 
-namespace Varuautomat {
-    class Varulager {
+namespace Varuautomat.Modell.Varulager {
+    public class Varulager {
 	Produkt[] varulager;
-	public Varulager();
+
+	public Varulager() {
+	    this.varulager = new Produkt[0];
+	}
     }
 }

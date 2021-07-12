@@ -1,10 +1,12 @@
 using System;
 
-namespace Varuautomat.Produkter {
-    class virtual Product {
-	private int pris;
+namespace Varuautomat.Modell.Produkter {
+    public abstract class Produkt {
+	protected int pris;
 
-	public Product();
-	public Pris { get; set; };
+	public abstract int Pris {
+	    get;
+	    set;
+	}
     }
 }

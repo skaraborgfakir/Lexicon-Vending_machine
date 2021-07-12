@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using Vending_machine.produkttyper;
+using Varuautomat.Modell.Produkter;
 
 namespace vending_machine_xUnit_provning
 {
