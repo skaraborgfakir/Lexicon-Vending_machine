@@ -1,11 +1,9 @@
 using System;
 using Xunit;
-using Varuautomat.Modell.Betalningsmedel;
+using Varuautomat.Modell;
 
-namespace vending_machine_xUnit_provning
-{
+namespace Varuautomat.xUnit_provning {
     public class Drickatypprov
     {
-
     }
 }

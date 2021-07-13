@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Varuautomat.Modell.Betalningsmedel {
+namespace Varuautomat.Modell {
     /// <summary>accepterade betalningsmedel vid kreditering (inmatning av pengar) till kundsaldo
     /// </summary
     public class Mynt {
@@ -42,7 +42,7 @@ namespace Varuautomat.Modell.Betalningsmedel {
 	}
     }
 
-    class AccepteradeBetalningsmedel {
+    public class AccepteradeBetalningsmedel {
 	//                                   diameter(mm) namn     material
 	//  1 kungen i profil, från vänster  19,5         1-krona  "koppar-pläterat stål"
 	//  5 kungens namnchiffer           23,75         5-krona  "nordiskt guld"
@@ -72,65 +72,64 @@ namespace Varuautomat.Modell.Betalningsmedel {
 
 	public bool accepterasMyntet( string namn) {
 	    bool resultat = false;
-
 	    foreach (Mynt mynt in accepteradeMynt)
 		if (namn==mynt.Namn) {
 		    resultat=true;
 		    break;
 		}
-
 	    return resultat;
 	}
-
 	public bool accepterasSedeln( string namn) {
 	    bool resultat = false;
-
 	    foreach (Sedel sedel in accepteradeSedlar)
 		if ( namn == sedel.Namn ) {
 		    resultat = true;
 		    break;
 		}
-
 	    return resultat;
 	}
-
-	public Mynt[] allaAccepteradeMynt() {
-	    Mynt[] allaMynt  = new Mynt[accepteradeMynt.Count];
+	public string[] allaAccepteradeMynt() {
+	    string[] allaMynt  = new string[accepteradeMynt.Count];
 	    int    i=0;
 
-	    foreach (Mynt mynt in accepteradeMynt) {
-		allaMynt[i++] = mynt;
-	    }
+	    foreach (Mynt mynt in accepteradeMynt)
+		allaMynt[i++] = mynt.Namn;
 
 	    return allaMynt;
 	}
-
-	public Sedel[] allaAccepteradeSedlar() {
-	    Sedel[] allaSedlar = new Sedel[accepteradeSedlar.Count];
+	public string[] allaAccepteradeSedlar() {
+	    string[] allaSedlar = new string[accepteradeSedlar.Count];
 	    int    i=0;
 
-	    foreach (Sedel sedel in accepteradeSedlar) {
-		allaSedlar[i++] = sedel;
-	    }
+	    foreach (Sedel sedel in accepteradeSedlar)
+		allaSedlar[i++] = sedel.Namn;
 
 	    return allaSedlar;
 	}
-    }
 
-    /// <summary>insättning från kund i saldo
-    /// </summary
-    class Inbetalt {
-	public void KrediteraKundsaldo( int kundSaldo) {
-	    throw new NotImplementedException();
-	}
-    }
+	/// <summary>
+	/// hur mycket är sedeln/myntet värt ?
+	/// </summary>
+	public int Värde(string namn) {
+	    bool hittad = false;  /// error
+	    int  värde=0;
 
-    /// <summary>återbetalning till kund av kvarvarande saldo
-    /// betalar tillbaka i mynt
-    /// </summary
-    class Återbetalning {
-	public void DebiteraKundsaldo( int kundSaldo) {
-	    throw new NotImplementedException();
+	    foreach (Mynt mynt in accepteradeMynt)
+		if (namn==mynt.Namn) {
+		    värde = mynt.Valör;
+		    hittad=true;
+		    break;
+		}
+	    if (!hittad)
+		foreach (Sedel sedel in accepteradeSedlar)
+		    if (namn==sedel.Namn) {
+			värde = sedel.Valör;
+			hittad=true;
+			break;
+		    }
+	    if(!hittad)
+		throw new ArgumentException( "ej accepterad valör");
+	    return värde;
 	}
     }
 }

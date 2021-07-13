@@ -1,4 +1,4 @@
-namespace Varuautomat.Modell.Produkter {
+namespace Varuautomat.Modell {
     class Lego : Leksak {
     }
 }

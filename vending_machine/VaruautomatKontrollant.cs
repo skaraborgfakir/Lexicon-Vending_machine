@@ -9,11 +9,12 @@
 //
 
 using System;
-using Varuautomat.Modell.Produkter;
-using Varuautomat.Modell.Varulager;
+using Varuautomat.Modell;
+using Varuautomat.UI;
 
 namespace Varuautomat.Kontrollant {
     class Kontrollant {
+
 	public Kontrollant() {
 	}
     }

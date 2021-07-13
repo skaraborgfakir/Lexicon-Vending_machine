@@ -1,10 +1,9 @@
 using System;
 using Xunit;
-using Varuautomat.Modell.Produkter;
+using Varuautomat.Modell;
 
-namespace vending_machine_xUnit_provning
-{
-    public class Mellanmåltypprov
+namespace Varuautomat.xUnit_provning {
+     public class Mellanmåltypprov
     {
 
     }

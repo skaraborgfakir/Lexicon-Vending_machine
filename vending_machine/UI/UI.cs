@@ -7,8 +7,8 @@
 using System;
 
 namespace Varuautomat.UI {
-    class UI {
-	public void UI() {
+    public class UIPanel {
+	public UIPanel() {
 	}
     }
 }

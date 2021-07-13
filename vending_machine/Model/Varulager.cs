@@ -1,7 +1,7 @@
 using System;
-using Varuautomat.Modell.Produkter;
+using Varuautomat.Modell;
 
-namespace Varuautomat.Modell.Varulager {
+namespace Varuautomat.Modell {
     public class Varulager {
 	Produkt[] varulager;
 

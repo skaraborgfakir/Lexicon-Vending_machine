@@ -1,9 +1,8 @@
 using System;
 using Xunit;
-using Varuautomat.Modell.Produkter;
+using Varuautomat.Modell;
 
-namespace Varuautomat.Betalningsmedel_xUnit_provning
-{
+namespace Varuautomat.xUnit_provning {
     public class Produkttypprovning
     {
 

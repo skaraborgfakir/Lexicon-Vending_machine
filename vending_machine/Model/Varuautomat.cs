@@ -5,12 +5,12 @@
 //
 
 using System;
-using Varuautomat.Modell.Produkter;
-using Varuautomat.Modell.Varulager;
 
 namespace Varuautomat.Modell {
     public class Varuautomat : IVending {
 	private int kundSaldo = 0;
+	private AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
+	private Varulager varuLager = new Varulager();
 
 	public int KundSaldo { get { return kundSaldo; }}
 
@@ -24,12 +24,20 @@ namespace Varuautomat.Modell {
 	/// <summary>
 	/// mata in sedlar eller mynt i fasta valörer, och kreditera kundsaldo
 	/// </summary>
-	public void InsertMoney(string valör) {
-	    if ( accepterasMyntet( valör)) {
+	public void InsertMoney(string namn) {
+	    try {
+		if ( accepteradeBetalningsmedel.accepterasMyntet( namn)) {
+		    kundSaldo = kundSaldo + accepteradeBetalningsmedel.Värde(namn);
+		}
+		else if ( accepteradeBetalningsmedel.accepterasSedeln( namn)) {
+		    kundSaldo = kundSaldo + accepteradeBetalningsmedel.Värde(namn);
+		} else {
+		    throw new ArgumentException( "ej accepterad valör");  // ej accepterad - spotta ut
+		}
 	    }
-	    else if ( accepterasSedeln( valör)) {
-	    } else {
-		throw new FelaktigValör();
+	    catch (ArgumentException)  // fel - accepterasSedeln eller accepterasMyntet ljög
+	    {
+		throw new ArgumentException( "ej accepterad valör");
 	    }
 	}
 

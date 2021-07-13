@@ -1,6 +1,6 @@
 using System;
 
-namespace Varuautomat.Modell.Produkter {
+namespace Varuautomat.Modell {
     public abstract class Produkt {
 	protected int pris;
 

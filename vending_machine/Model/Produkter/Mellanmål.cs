@@ -1,7 +1,7 @@
 using System;
-using Varuautomat.Modell.Produkter;
+using Varuautomat.Modell;
 
-namespace Varuautomat.Modell.Produkter {
+namespace Varuautomat.Modell {
     class Mellanmål : Produkt, IAvseddAttÄtas {
 	public override int Pris {
 	    get { return base.pris; }
