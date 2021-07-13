@@ -10,15 +10,19 @@ namespace Varuautomat.Modell {
     public class Varuautomat : IVending {
 	private int kundSaldo = 0;
 	private AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
-	private Varulager varuLager = new Varulager();
+	private Varulager varulager = new Varulager();
 
 	public int KundSaldo { get { return kundSaldo; }}
 
 	public Varuautomat() {
 	}
 
-	public void ShowAll() {
-	    throw new NotImplementedException();
+	public string[] ShowAll() {
+	    return varulager.AllaProdukter();
+	}
+
+	public string[] AllaProdukter(Produkttyper produkttyp) {
+	    return varulager.AllaProdukter(produkttyp);
 	}
 
 	/// <summary>
