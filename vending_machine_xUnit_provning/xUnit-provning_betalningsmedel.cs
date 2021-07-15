@@ -4,42 +4,25 @@ using System.Collections;
 using System.Collections.Generic;
 using Varuautomat.Modell;
 
-/// <summary> modulen ersätter Varuautomatkontrollanten
-/// kontrollera att betalningsmedel som ska vara ok, är det
-/// dessutom finns några prov av att ej tillåtna inte accepteras
+/// <summary> modulen ersätter Varuautomatkontrollanten.
+/// AccepteradeBetalningsmedel har uppgifter och valör för de betalningsmedel som ska accepteras
+/// Kontrollerar att betalningsmedel som ska vara ok, är det
+/// Dessutom finns några prov av att ej tillåtna inte accepteras
 /// </summary>
 namespace Varuautomat.xUnit_provning {
-    /// <summary> Testa att endast legala betalningsmedel accepteras av Varuautomaten
-    /// i samtliga fall förväntas att det blir en exception.
-    /// använder method i betalningsmedel för kontrollen
+    /// <summary> Testa att betalningsmedel som inte ska accepteras av klassen
+    /// inte heller accepteras
+    ///
+    /// använder method i betalningsmedel för kontrollen och assert av dess resultat
+    /// separata metoder för mynt och sedlar
     /// </summary>
     public class Felaktigt_Betalningsmedel1
     {
-	[Theory]
-	[InlineData( "danskKrona" )]
-	public void MyntprovDanskkrona(string valör) {
-	    // Arrange
-	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
-	    // Act
-	    bool resultat = accepteradeBetalningsmedel.accepterasMyntet(valör);
-	    // Assert
-	    Assert.False(resultat);
-	}
-
-	[Theory]
-	[InlineData( "1Zdollar" )]
-	public void MyntprovZimbabwedollar(string valör) {
-	    // Arrange
-	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
-	    // Act
-	    bool resultat = accepteradeBetalningsmedel.accepterasMyntet(valör);
-	    // Assert
-	    Assert.False(resultat);
-	}
-
+	/// mynt
 	[Theory]
 	[InlineData( "KungHaakon" )]
-	public void SedelprovNorskKrona(string valör) {
+	[InlineData( "danskKrona" )]
+	public void ProvaIckeAccepteradeMynt(string valör) {
 	    // Arrange
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    // Act
@@ -47,10 +30,11 @@ namespace Varuautomat.xUnit_provning {
 	    // Assert
 	    Assert.False(resultat);
 	}
-
+	/// motsvarande för sedlar
 	[Theory]
+	[InlineData( "1Zdollar" )]
 	[InlineData( "KopieradIngmar" )]
-	public void SedelprovKopierad500(string valör) {
+	public void ProvaIckeAccepteradSedel(string valör) {
 	    // Arrange
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    // Act
@@ -59,37 +43,18 @@ namespace Varuautomat.xUnit_provning {
 	    Assert.False(resultat);
 	}
     }
-    /// <summary> Testa att endast legala betalningsmedel accepteras av Varuautomaten
-    /// i samtliga fall förväntas att det blir en exception.
-    /// använder medlemstest i  allaAccepteradeMynt() och allaAccepteradeSedlar()
+
+    /// <summary> Testa att betalningsmedel som inte ska accepteras av klassen inte heller accepteras
+    ///
+    /// testar att pengens namn inte finns i en sträng vektor
+    /// separata metoder för mynt och sedlar
     /// </summary>
     public class Felaktigt_Betalningsmedel2
     {
 	[Theory]
 	[InlineData( "danskKrona" )]
-	public void MyntprovDanskkrona(string valör) {
-	    // Arrange
-	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
-	    // Act
-	    string[] allaAccepteradeMynt = accepteradeBetalningsmedel.allaAccepteradeMynt();
-	    // Assert
-	    Assert.DoesNotContain(valör,  allaAccepteradeMynt);
-	}
-
-	[Theory]
-	[InlineData( "1Zdollar" )]
-	public void MyntprovZimbabwedollar(string valör) {
-	    // Arrange
-	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
-	    // Act
-	    string[] allaAccepteradeMynt = accepteradeBetalningsmedel.allaAccepteradeMynt();
-	    // Assert
-	    Assert.DoesNotContain(valör,  allaAccepteradeMynt);
-	}
-
-	[Theory]
 	[InlineData( "KungHaakon" )]
-	public void SedelprovNorskKrona(string valör) {
+	public void ProvaIckeAccepteradeMynt(string valör) {
 	    // Arrange
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    // Act
@@ -98,9 +63,12 @@ namespace Varuautomat.xUnit_provning {
 	    Assert.DoesNotContain(valör,  allaAccepteradeMynt);
 	}
 
+	/// motsvarande för sedlar
 	[Theory]
-	[InlineData( "KopieradIngmar" )]
-	public void SedelprovKopierad500(string valör) {
+	[InlineData( "1 Zimbabwe dollar" )]
+	[InlineData( "Kopierad Ingmar" )]
+	[InlineData( "George Washington" )]
+	public void ProvaIckeAccepteradSedel(string valör) {
 	    // Arrange
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    // Act
@@ -111,22 +79,14 @@ namespace Varuautomat.xUnit_provning {
     }
 
     ///<summary> Testa att några legala betalningsmedel accepteras av Varuautomaten
+    /// separata metoder för mynt och sedlar
     ///</summary>
     public class Accepterade_Betalningsmedel1
     {
 	[Theory]
 	[InlineData( "kungen" )]
-	public void Myntprov1krona(string valör) {
-	    // Arrange
-	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
-	    // Act
-	    bool resultat = accepteradeBetalningsmedel.accepterasMyntet(valör);
-	    // Assert
-	    Assert.True(resultat);
-	}
-	[Theory]
 	[InlineData( "5-krona" )]
-	public void MyntprovNamnchiffer(string valör) {
+	public void ProvaAttMyntAccepteras(string valör) {
 	    // Arrange
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    // Act
@@ -136,60 +96,73 @@ namespace Varuautomat.xUnit_provning {
 	}
 	[Theory]
 	[InlineData( "Astrid" )]
-	public void SedelprovSelma(string valör) {
-	    // Arrange
-	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
-	    // Act
-	    bool resultat = accepteradeBetalningsmedel.accepterasSedeln(valör);
-	    // Assert
-	    Assert.True(resultat);
-	}
-	[Theory]
 	[InlineData( "Ingmar" )]
-	public void SedelprovIngmar(string valör) {
+	public void ProvaAttSedelAccepteras(string valör) {
 	    // Arrange
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    // Act
 	    bool resultat = accepteradeBetalningsmedel.accepterasSedeln(valör);
 	    // Assert
 	    Assert.True(resultat);
-	}
-
-	[Theory]
-	[ClassData(typeof(BlandadeValörerData))]
-	public void BlandadeValörer(string[] blandadeValörer) {
-	    // Arrange
-	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
-	    bool resultat = true;
-	    // Act
-	    foreach (string valör in blandadeValörer)
-		if ( !accepteradeBetalningsmedel.accepterasMyntet(valör) &&
-		     !accepteradeBetalningsmedel.accepterasSedeln(valör))
-		    resultat = false;
-	    // Assert
-	    Assert.True(resultat);
-	}
-	public class BlandadeValörerData : IEnumerable<object[]> {
-	    public IEnumerator<object[]> GetEnumerator() {
-		yield return new object[] { new string[] { "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid"}};
-	    }
-	    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
     }
-    ///<summary> Testa att några legala betalningsmedel accepteras av Varuautomaten
+
+    ///<summary> Testa att några legala betalningsmedel kan accepteras av Varuautomaten
     /// använder medlemstest i  allaAccepteradeMynt() och allaAccepteradeSedlar()
     ///</summary>
     public class Accepterade_Betalningsmedel2
     {
 	[Theory]
 	[InlineData( "kungen" )]
-	public void Myntprov1krona(string valör) {
+	[InlineData( "5-krona" )]
+	public void ProvaAttMyntAccepteras(string valör) {
 	    // Arrange
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    // Act
 	    string[] allaAccepteradeMynt = accepteradeBetalningsmedel.allaAccepteradeMynt();
 	    // Assert
 	    Assert.Contains(valör,  allaAccepteradeMynt);
+	}
+	[Theory]
+	[InlineData( "Astrid" )]
+	[InlineData( "Ingmar" )]
+	public void ProvaAttSedelAccepteras(string valör) {
+	    // Arrange
+	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
+	    // Act
+	    string[] allaAccepteradeMynt = accepteradeBetalningsmedel.allaAccepteradeSedlar();
+	    // Assert
+	    Assert.Contains(valör,  allaAccepteradeMynt);
+	}
+    }
+
+    /// <summary>
+    /// kontroll av sedlar och mynt accepteras
+    /// enumerator
+    /// <summary>
+    public class Accepterade_Betalningsmedel3 {
+	[Theory]
+	[ClassData(typeof(BlandadeValörerData))]
+	public void BlandadeValörer(string[] blandadeValörer) {
+	    // Arrange
+	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
+	    bool resultat = false;
+	    // Act
+	    foreach (string valör in blandadeValörer)
+	    {
+		if ((!resultat) &
+		    ( accepteradeBetalningsmedel.accepterasMyntet(valör) ||
+		      accepteradeBetalningsmedel.accepterasSedeln(valör)))
+		    resultat = true;
+	    }
+	    // Assert
+	    Assert.True(resultat);
+	}
+	public class BlandadeValörerData : IEnumerable<object[]> {
+	    public IEnumerator<object[]> GetEnumerator() {
+		yield return new object[] { new string[] { "5-krona", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid"}};
+	    }
+	    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
     }
 }
