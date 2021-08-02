@@ -165,22 +165,6 @@ namespace Varuautomat.Modell {
 
 	    return allaAccepteradeBetalningsmedel;
 	}
-	//     int    i=0;
-
-	//     foreach (Mynt mynt in accepteradeMynt)
-	//	allaMynt[i++] = mynt.Namn;
-
-	//     return allaMynt;
-	// }
-	// public string[] allaAccepteradeSedlar() {
-	//     string[] allaSedlar = new string[accepteradeSedlar.Count];
-	//     int    i=0;
-
-	//     foreach (Sedel sedel in accepteradeSedlar)
-	//	allaSedlar[i++] = sedel.Namn;
-
-	//     return allaSedlar;
-	// }
 
 	//
 	// returnera en matris/lista med all accepterade sedlar
@@ -239,11 +223,11 @@ namespace Varuautomat.Modell {
 		    return 1;
 		} else {
 		    if (lhs.Valör == rhs.Valör) {
-			    return 0;
-			}
+			return 0;
+		    }
 		    else if (lhs.Valör < rhs.Valör) {
-				   return -1;
-			} else
+			return -1;
+		    } else
 			return 1;
 		}
 	    }
