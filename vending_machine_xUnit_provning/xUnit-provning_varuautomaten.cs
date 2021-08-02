@@ -8,6 +8,9 @@ namespace Varuautomat.xUnit_provning {
     public class VaruautomatVarulagerprovning
     {
 	[Theory]
+	[InlineData( "Starship Enterprise" )]
+	[InlineData( "Japp" )]
+	[InlineData( "Ångbåt" )]
 	[InlineData( "Te" )]
 	[InlineData( "Kaffe" )]
 	[InlineData( "Coca Cola" )]
@@ -21,6 +24,7 @@ namespace Varuautomat.xUnit_provning {
 	}
 
 	[Theory]
+	[InlineData( "Superdestroyer Executor" )]
 	[InlineData( "Starship Executor" )]
 	[InlineData( "Dajm" )]
 	[InlineData( "Lönnsirap" )]

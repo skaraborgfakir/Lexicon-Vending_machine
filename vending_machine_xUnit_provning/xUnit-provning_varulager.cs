@@ -24,7 +24,7 @@ namespace Varuautomat.xUnit_provning {
 	}
     }
 
-    public class Varulagerprov {
+    public class ExisterandeVaror {
 	[Theory]
 	[InlineData( "Starship Enterprise" )]
 	[InlineData( "Japp" )]
