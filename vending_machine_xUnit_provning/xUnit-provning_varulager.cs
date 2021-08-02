@@ -8,6 +8,18 @@ using Varuautomat.Modell;
 /// kontrollera att några saker finns i varulager
 /// </summary>
 namespace Varuautomat.xUnit_provning {
+    public class IckeExisterandeVaror {
+	[Theory]
+	[InlineData( "Superdestroyer Executor" )]
+	public void VadFinnsInteSomProdukt( string produktnamn) {
+	    // Arrange
+	    Modell.Varulager varulager = new Modell.Varulager();
+	    // Act
+	    string[] allaProdukter = varulager.AllaProdukter();
+	    // Assert
+	    Assert.DoesNotContain( produktnamn, allaProdukter);
+	}
+    }
     public class Varulagerprov {
 	[Theory]
 	[InlineData( "Starship Enterprise" )]
