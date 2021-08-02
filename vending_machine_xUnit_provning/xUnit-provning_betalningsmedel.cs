@@ -79,6 +79,25 @@ namespace Varuautomat.xUnit_provning {
 	}
     }
 
+    /// <summary> Testa att betalningsmedel som inte ska accepteras av klassen inte heller accepteras
+    ///
+    /// testar att vad som händer för felaktiga pengar när man frågar om deras värde
+    /// </summary>
+    public class Felaktigt_Betalningsmedel3
+    {
+	[Theory]
+	[InlineData( "KungHaakon" )]
+	[InlineData( "danskKrona" )]
+	public void ProvaIckeAccepteradPeng(string valör) {
+	    // Arrange
+	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
+	    // Act
+	    Action act = () => accepteradeBetalningsmedel.Värde(valör);
+	    //Assert
+	    ArgumentException e = Assert.Throws<ArgumentException>(act);
+	}
+    }
+
     ///<summary> Testa att några legala betalningsmedel kan accepteras av Varuautomatens
     /// modul betalningsmedel
     /// separata metoder för mynt och sedlar
@@ -137,6 +156,17 @@ namespace Varuautomat.xUnit_provning {
 	    string[] allaAccepteradeSedlar = accepteradeBetalningsmedel.allaAccepteradeSedlar();
 	    // Assert
 	    Assert.Contains(valör,  allaAccepteradeSedlar);
+	}
+	[Theory]
+	[InlineData( "Astrid", 20  )]
+	[InlineData( "Ingmar", 200 )]
+	public void ProvaSedelsVärde(string namn, int valör) {
+	    // Arrange
+	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
+	    // Act
+	    int värde = accepteradeBetalningsmedel.Värde(namn);
+	    // Assert
+	    Assert.True(valör==värde);
 	}
     }
 
