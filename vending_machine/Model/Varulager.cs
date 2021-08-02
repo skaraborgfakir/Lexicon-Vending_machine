@@ -116,5 +116,17 @@ namespace Varuautomat.Modell {
 
 	    return produkter;
 	}
+
+	/// <summary>kontrollera om en produkt finns utan att bry sig om den är dryck eller ngt annat
+	/// </summary>
+	public bool finnsProdukten(string namn) {
+	    foreach ( KeyValuePair<Produkt,int> post in varulager) {
+		if (post.Key.Namn == namn) {
+		    return true;
+		}
+	    }
+
+	    return false;
+	}
     }
 }

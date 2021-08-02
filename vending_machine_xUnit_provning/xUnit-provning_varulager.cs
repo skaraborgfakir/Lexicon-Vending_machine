@@ -11,6 +11,9 @@ namespace Varuautomat.xUnit_provning {
     public class IckeExisterandeVaror {
 	[Theory]
 	[InlineData( "Superdestroyer Executor" )]
+	[InlineData( "Starship Executor" )]
+	[InlineData( "Dajm" )]
+	[InlineData( "Lönnsirap" )]
 	public void VadFinnsInteSomProdukt( string produktnamn) {
 	    // Arrange
 	    Modell.Varulager varulager = new Modell.Varulager();
@@ -20,10 +23,12 @@ namespace Varuautomat.xUnit_provning {
 	    Assert.DoesNotContain( produktnamn, allaProdukter);
 	}
     }
+
     public class Varulagerprov {
 	[Theory]
 	[InlineData( "Starship Enterprise" )]
 	[InlineData( "Japp" )]
+	[InlineData( "Ångbåt" )]
 	[InlineData( "Te" )]
 	public void VadFinnsILager1( string produktnamn) {
 	    // Arrange
@@ -36,40 +41,16 @@ namespace Varuautomat.xUnit_provning {
 
 	[Theory]
 	[InlineData( "Starship Enterprise" )]
+	[InlineData( "Japp" )]
 	[InlineData( "Ångbåt" )]
-	public void VadFinnsILagerAvProduktTypen( string produktnamn) {
+	[InlineData( "Te" )]
+	public void VadFinnsILager2( string produktnamn) {
 	    // Arrange
 	    Modell.Varulager varulager = new Modell.Varulager();
 	    // Act
-	    string[] allaProdukter = varulager.AllaProdukter(Produkttyper.lego);
+	    bool resultat = varulager.finnsProdukten(produktnamn);
 	    // Assert
-	    Assert.Contains( produktnamn, allaProdukter);
+	    Assert.True(resultat);
 	}
-
-	[Theory]
-	[InlineData( "Starship Executor" )]
-	[InlineData( "Dajm" )]
-	[InlineData( "Lönnsirap" )]
-	public void VadFinnsInteILager( string produktnamn) {
-	    // Arrange
-	    Modell.Varulager varulager = new Modell.Varulager();
-	    // Act
-	    string[] allaProdukter = varulager.AllaProdukter();
-	    // Assert
-	    Assert.DoesNotContain( produktnamn, allaProdukter);
-	}
-
-	[Theory]
-	[InlineData( "Starship Enterprise" )]
-	[InlineData( "Ångbåt" )]
-	public void VadFinnsInteILagerAvProduktTypen( string produktnamn) {
-	    // Arrange
-	    Modell.Varulager varulager = new Modell.Varulager();
-	    // Act
-	    string[] allaProdukter = varulager.AllaProdukter(Produkttyper.dricka);
-	    // Assert
-	    Assert.DoesNotContain( produktnamn, allaProdukter);
-	}
-
     }
 }
