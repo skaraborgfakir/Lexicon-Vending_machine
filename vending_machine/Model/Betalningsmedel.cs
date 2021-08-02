@@ -257,13 +257,6 @@ namespace Varuautomat.Modell {
 		    hittad=true;
 		    break;
 		}
-	    // if (!hittad)
-	    //	foreach (Sedel sedel in accepteradeSedlar)
-	    //	    if (namn==sedel.Namn) {
-	    //		värde = sedel.Valör;
-	    //		hittad=true;
-	    //		break;
-	    //	    }
 	    if(!hittad)
 		throw new ArgumentException( "ej accepterad valör");
 	    return värde;
