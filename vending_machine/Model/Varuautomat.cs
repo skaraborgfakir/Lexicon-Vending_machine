@@ -20,10 +20,9 @@ namespace Varuautomat.Modell {
 	public string[] ShowAll() {
 	    return varulager.AllaProdukter();
 	}
-
-	// public string[] AllaProdukter(Produkttyper produkttyp) {
-	//     return varulager.AllaProdukter(produkttyp);
-	// }
+	public string[] ShowAll(Produkttyper produkttyp) {
+	    return varulager.AllaProdukter(produkttyp);
+	}
 
 	/// <summary>
 	/// mata in sedlar eller mynt i fasta valörer, och kreditera kundsaldo

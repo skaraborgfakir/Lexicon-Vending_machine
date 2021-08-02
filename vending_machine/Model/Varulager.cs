@@ -40,11 +40,6 @@ namespace Varuautomat.Modell {
 	}
 
 	public string[] AllaProdukter() {
-	    // foreach( KeyValuePair<string, string> kvp in openWith )
-	    // {
-	    //     Console.WriteLine("Key = {0}, Value = {1}",
-	    //         kvp.Key, kvp.Value);
-	    // }
 	    string[] produkter = new string[varulager.Count];
 	    int      i=0;
 
