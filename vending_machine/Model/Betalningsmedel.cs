@@ -124,16 +124,22 @@ namespace Varuautomat.Modell {
 	// List<Sedel> accepteradeSedlar = new List<Sedel>();
 
 	public AccepteradeBetalningsmedel() {
-	    accepteradValörer.Add(new Mynt(   "kungen",  1, 19.50F, "kungen i profil, från vänster", "koppar-pläterat stål, kopparfärgat"));  // från Oskar II: mynt med kungens profil
-	    accepteradValörer.Add(new Mynt(  "5-krona",  5, 23.75F, "kungens namnchiffer",           "nordiskt guld"));
-	    accepteradValörer.Add(new Mynt( "10-krona", 10, 20.50F, "kungen i profil, från vänster", "nordiskt guld"));
-
+	    //
+	    // huller om buller för att kunna kontrollera att sorteringen av dem fungerar
+	    //
+	    accepteradValörer.Add(new Mynt(    "kungen",  1, 19.50F, "kungen i profil, från vänster", "koppar-pläterat stål, kopparfärgat"));  // från Oskar II: mynt med kungens profil
 	    accepteradValörer.Add(new Sedel( "Astrid",   20, "Astrid Lindgren",  "Småland, Linnés egen blomma - Linnea"));
 	    accepteradValörer.Add(new Sedel( "Evert",    50, "Evert Taube",      "Bohuslän, båt från hällristning"));
 	    accepteradValörer.Add(new Sedel( "Greta",   100, "Greta Garbo",      "Stockholm, Gamla stanvy"));
+
+	    accepteradValörer.Add(new Mynt(  "5-krona",   5, 23.75F, "kungens namnchiffer",           "nordiskt guld"));
+	    accepteradValörer.Add(new Mynt( "10-krona",  10, 20.50F, "kungen i profil, från vänster", "nordiskt guld"));
+
 	    accepteradValörer.Add(new Sedel( "Ingmar",  200, "Ingmar Bergman",   "Gotland, Gotlandsraukar"));
 	    accepteradValörer.Add(new Sedel( "Birgit",  500, "Birgit Nilsson",   "Skåne, Öresundsbron"));
 	    accepteradValörer.Add(new Sedel( "Dag",    1000, "Dag Hammarskjöld", "Laponia"));
+
+	    accepteradValörer.Sort(JämförValör);
 	}
 
 	public bool accepterasMyntet(string namn) {
@@ -204,13 +210,8 @@ namespace Varuautomat.Modell {
 	    return allaSedlar;
 	}
 
-	/// <summary> sortera valörer i bokstavsordning
+	/// <summary> sortera valörer i stigande ordning
 	/// </summary>
-	// public List<Peng> sorteradEfterNamn()
-	// {
-	// }
-	// public class PengJämförNamn : IComparer<Peng> {
-	// }
 	private static int JämförValör(Peng lhs, Peng rhs) {
 	    if (lhs==null) {
 		if (rhs==null) { // båda två är lika med null
