@@ -170,24 +170,54 @@ namespace Varuautomat.xUnit_provning {
 	}
     }
 
-    public class DumpAccepterade_Betalningsmedel {
+    //
+    // kontrollera att valörerna är sorterade i stigande ordning
+    //
+    public class KontrolleraOrdning {
 	[Theory]
 	[InlineData( "Ingmar" )]
-	public void Dump( string namn1) {
+	public void KontrolleraSorteringEfterValör( string namn1) {
 	    // Arrange
+	    bool resultat = true;
+	    int  tidigareValör = 0;
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
-
 	    string[] derasNamn = accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();
-	    foreach (string namn in derasNamn) {
-		Console.WriteLine( namn);
+
+	    // Act
+	    foreach (string valör in derasNamn) {
+		if (accepteradeBetalningsmedel.Värde(valör) < tidigareValör) {
+		    resultat = false;
+		    break;
+		}
+		tidigareValör = accepteradeBetalningsmedel.Värde(valör);
 	    }
 
-	    string[] derasNamn2 = accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();
-	    accepteradeBetalningsmedel.sorteradEfterValör();
-	    foreach (string namn in derasNamn2) {
-		Console.WriteLine( namn);
-	    }
-
+	    // Assert
+	    Assert.True(resultat);
 	}
     }
+
+    // public class DumpAccepterade_Betalningsmedel {
+    //	[Theory]
+    //	[InlineData( "Ingmar" )]
+    //	public void Dump( string namn1) {
+    //	    // Arrange
+    //	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
+
+    //	    string[] derasNamn = accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();
+    //	    foreach (string namn in derasNamn) {
+    //		Console.WriteLine( namn);
+    //	    }
+
+    //	    //
+    //	    // kontrollera att den funktion som sorterar betalninsmedeln i stigande valör gör rätt
+    //	    // nödvändigt för återbetalning av kundsaldot - dvs växelpengarna
+    //	    //
+    //	    accepteradeBetalningsmedel.sorteradEfterValör();
+    //	    string[] derasNamn2 = accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();
+    //	    foreach (string namn in derasNamn2) {
+    //		Console.WriteLine( namn);
+    //	    }
+    //	}
+    // }
 }
