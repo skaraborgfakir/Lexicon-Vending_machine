@@ -199,15 +199,14 @@ namespace Varuautomat.xUnit_provning {
 	    // Act
 	    Dictionary <string, int> växel = varuautomat.EndTransaction();
 
+	    //Assert
+	    Assert.Equal( 0, varuautomat.KundSaldo);
 	    Dictionary <string, int>.KeyCollection växelPeng = växel.Keys;
 	    int växelSumma = 0;
 	    foreach (string pengnamn in växelPeng) {
 		Console.WriteLine( "Växelpengens namn: " + pengnamn + " antal som växel: "+ växel[pengnamn] + " delsumma: " +  växel[pengnamn] * accepteradeBetalningsmedel.Värde(pengnamn) );
 		växelSumma = växelSumma + växel[pengnamn] * accepteradeBetalningsmedel.Värde(pengnamn);
 	    }
-
-	    //Assert
-	    Assert.Equal( 0, varuautomat.KundSaldo);
 	    Assert.Equal( växelSumma, förväntadVäxelSumma);
 	}
 
