@@ -30,6 +30,8 @@ namespace Varuautomat.xUnit_provning {
 	[InlineData( "Japp" )]
 	[InlineData( "Ångbåt" )]
 	[InlineData( "Te" )]
+	[InlineData( "Kaffe" )]
+	[InlineData( "Coca Cola" )]
 	public void VadFinnsILager1( string produktnamn) {
 	    // Arrange
 	    Modell.Varulager varulager = new Modell.Varulager();
@@ -44,6 +46,8 @@ namespace Varuautomat.xUnit_provning {
 	[InlineData( "Japp" )]
 	[InlineData( "Ångbåt" )]
 	[InlineData( "Te" )]
+	[InlineData( "Kaffe" )]
+	[InlineData( "Coca Cola" )]
 	public void VadFinnsILager2( string produktnamn) {
 	    // Arrange
 	    Modell.Varulager varulager = new Modell.Varulager();

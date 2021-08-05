@@ -60,7 +60,7 @@ namespace Varuautomat.Modell {
 	public Produkt Purchase(string namn) {
 	    if (_varulager.finnsProdukten(namn)) {
 		// produkten finns, debitera kundsaldo och kreditera totalFörsäljning
-		KundSaldo =        KundSaldo - _varulager.pris(namn);
+		KundSaldo = KundSaldo - _varulager.pris(namn);
 		TotalFörsäljning = TotalFörsäljning + _varulager.pris(namn);
 		return _varulager.levereraProdukt(namn);
 	    } else {
@@ -75,15 +75,22 @@ namespace Varuautomat.Modell {
 	    Dictionary<string, int> växelAttÅterlämna = new Dictionary<string, int>();
 
 	    string[] pengNamn = _accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();
-
-	    foreach (string peng in pengNamn) {
-		Console.WriteLine(peng);
-		//		if (_accepteradeBetalningsmedel.Värde(peng) < kundsaldo)
-	    }
+	    // foreach (string peng in pengNamn)
+	    //	Console.WriteLine(peng);
 
 	    //
 	    // listan med betalningsmedel är sorterad i sjunkande ordning så iterera framåt i den
 	    //
+	    foreach (string peng in pengNamn) {
+		while ( _accepteradeBetalningsmedel.Värde(peng) <= KundSaldo ) {
+		    if (!växelAttÅterlämna.ContainsKey(peng))
+			växelAttÅterlämna.Add( peng, 0);
+		    växelAttÅterlämna[peng] = växelAttÅterlämna[peng] + 1;
+		    KundSaldo = KundSaldo - _accepteradeBetalningsmedel.Värde(peng);
+		    Console.WriteLine( "peng: "+ peng + " KundSaldo: " + KundSaldo );
+		}
+	    }
+
 	    return växelAttÅterlämna;
 	}
     }

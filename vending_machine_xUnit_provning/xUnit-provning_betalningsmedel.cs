@@ -201,26 +201,28 @@ namespace Varuautomat.xUnit_provning {
     }
 
     //
-    // kontrollera att valörerna är sorterade i stigande ordning
+    // kontrollera att valörerna är sorterade i sjunkande ordning
     //
     public class KontrolleraOrdning {
 	[Theory]
 	[InlineData( "Ingmar" )]
 	public void KontrolleraSorteringEfterValör( string namn1) {
-	    _ = namn1;
 	    // Arrange
+	    _ = namn1;
 	    bool resultat = true;
 	    int  tidigareValör = 0;
+
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    string[] derasNamn = accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();
+	    int tidgareVärde = accepteradeBetalningsmedel.Värde(derasNamn[0]);
 
 	    // Act
 	    foreach (string valör in derasNamn) {
-		if (accepteradeBetalningsmedel.Värde(valör) < tidigareValör) {
+		if (accepteradeBetalningsmedel.Värde(valör) > tidgareVärde) {
 		    resultat = false;
 		    break;
 		}
-		tidigareValör = accepteradeBetalningsmedel.Värde(valör);
+		tidgareVärde = accepteradeBetalningsmedel.Värde(valör);
 	    }
 
 	    // Assert
@@ -228,27 +230,19 @@ namespace Varuautomat.xUnit_provning {
 	}
     }
 
-    // public class DumpAccepterade_Betalningsmedel {
-    //	[Theory]
-    //	[InlineData( "Ingmar" )]
-    //	public void Dump( string namn1) {
-    //	    // Arrange
-    //	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
+    public class DumpAccepterade_Betalningsmedel {
+	[Theory]
+	[InlineData( "Ingmar" )]
+	public void Dump( string namn1) {
+	    _ = namn1;
 
-    //	    string[] derasNamn = accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();
-    //	    foreach (string namn in derasNamn) {
-    //		Console.WriteLine( namn);
-    //	    }
+	    // Arrange
+	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 
-    //	    //
-    //	    // kontrollera att den funktion som sorterar betalninsmedeln i stigande valör gör rätt
-    //	    // nödvändigt för återbetalning av kundsaldot - dvs växelpengarna
-    //	    //
-    //	    accepteradeBetalningsmedel.sorteradEfterValör();
-    //	    string[] derasNamn2 = accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();
-    //	    foreach (string namn in derasNamn2) {
-    //		Console.WriteLine( namn);
-    //	    }
-    //	}
-    // }
+	    string[] derasNamn = accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();
+	    foreach (string namn in derasNamn) {
+		Console.WriteLine( namn);
+	    }
+	}
+    }
 }

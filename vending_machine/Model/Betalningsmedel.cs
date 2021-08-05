@@ -136,7 +136,7 @@ namespace Varuautomat.Modell {
 	    accepteradValörer.Add(new Sedel( "Birgit",  500, "Birgit Nilsson",   "Skåne, Öresundsbron"));
 	    accepteradValörer.Add(new Sedel( "Dag",    1000, "Dag Hammarskjöld", "Laponia"));
 
-	    accepteradValörer.Sort(JämförValör);
+	    accepteradValörer.Sort(JämförValör);   // sortera i sjunkande ordning, behövs för EndTransactions uppräkning av växel
 	}
 
 	// låt myntinkastet få veta om något är OK
@@ -223,13 +223,11 @@ namespace Varuautomat.Modell {
 		if (rhs==null) {   // l != null men r == null
 		    return 1;
 		} else {
-		    if (lhs.Valör == rhs.Valör) {
+		    if (lhs.Valör < rhs.Valör) {
 			return 0;
 		    }
-		    else if (lhs.Valör < rhs.Valör) {
+		    else
 			return -1;
-		    } else
-			return 1;
 		}
 	    }
 	}
