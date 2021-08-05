@@ -38,7 +38,7 @@ namespace Varuautomat.xUnit_provning {
 	}
     }
 
-    /// <summary> Testa att Varuautomaten accepterar eller ej accepterar valörer/valutor
+    /// <summary> Testa vilka valörer/valutor som Varuautomaten accepterar (eller inte)
     /// </summary>
     public class VaruautomatKontrolleraBetalningsmedel {
 	/// <summary> Testa att Varuautomaten inte accepterar icke-accepterade valörer/valutor
@@ -116,31 +116,60 @@ namespace Varuautomat.xUnit_provning {
 	}
     }
 
-    /// <summary> Testa att Varuautomaten rätt summerar pengarna
-    /// och returnerar rätt summa efter transaktionsslut
+    /// <summary> Testa att saldo i varuautomaten är rätt efter att köpet var helt avbrutet och efter några genomförda
     /// </summary>
-    // public class VaruautomatTransaktionsslut {
-    //	/// <summary> Testa att Varuautomaten vid avbrytet köp returnerar växel på rätt sätt
-    //	/// </summary>
-    //	[Theory]
-    //	[ClassData(typeof(BlandadeValörerData))]
-    //	public void BlandadeValörerAvbrytetKöp(int förväntat_belopp, string[] blandadeValörer) {
-    //	    // Arrange
-    //	    Modell.Varuautomat varuautomat = new Modell.Varuautomat();
-    //	    // Act
-    //	    foreach ( string valör in blandadeValörer)
-    //		varuautomat.InsertMoney( valör);
-    //	    varuautomat.EndTransaction();
-    //	    //Assert
-    //	    Assert.Throws<NotImplementedException>(() => varuautomat.EndTransaction());
-    //	    //  Assert.Equal( förväntat_belopp, varuautomat.KundSaldo);
-    //	}
-    //	public class BlandadeValörerData : IEnumerable<object[]> {
-    //	    public IEnumerator<object[]> GetEnumerator() {
-    //		yield return new object[] { 0, new string[] { "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid"}};
-    //		yield return new object[] { 0, new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid"}};
-    //	    }
-    //	    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-    //	}
-    // }
+    public class VaruautomatTransaktioner {
+	/// <summary> Testa att Varuautomaten vid avbrytet köp returnerar växel på rätt sätt
+	/// </summary>
+	[Theory]
+	[ClassData(typeof(EttKöp))]
+	public void BlandadKompott1(string[] blandadeValörer, int förväntat_belopp, string[] saker, int kvarståendeBelopp) {
+	    //
+	    _ = saker;
+	    _ = kvarståendeBelopp;
+
+	    // Arrange
+	    Modell.Varuautomat varuautomat = new Modell.Varuautomat();
+	    // Act
+	    foreach ( string valör in blandadeValörer)
+		varuautomat.InsertMoney( valör);
+	    varuautomat.EndTransaction();
+	    //Assert
+	    Assert.Equal( förväntat_belopp, varuautomat.KundSaldo);
+	}
+	// public class EttKöp : IEnumerable<object[]> {
+	//     public IEnumerator<object[]> GetEnumerator() {
+	//	yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid", "Astrid"}, 500};
+	//	yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid"},           480};
+	//     }
+	//     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+	// }
+
+	/// <summary> Testa att Varuautomaten vid genomförda köp har rätt kvarstående kundsaldo
+	/// </summary>
+	[Theory]
+	[ClassData(typeof(EttKöp))]
+	public void BlandadKompott2(string[] blandadeValörer, int förväntat_belopp, string[] saker, int kvarståendeBelopp) {
+	    // Arrange
+	    Modell.Varuautomat varuautomat = new Modell.Varuautomat();
+	    // Act
+	    foreach (string peng in blandadeValörer) varuautomat.InsertMoney(peng);
+	    //Assert
+	    Assert.Equal( förväntat_belopp, varuautomat.KundSaldo);
+	    foreach (string sak in saker) {
+		Produkt produkt = varuautomat.Purchase(sak);
+	    }
+	    //Assert
+	    Assert.Equal( kvarståendeBelopp, varuautomat.KundSaldo);
+	}
+	public class EttKöp : IEnumerable<object[]> {
+	    public IEnumerator<object[]> GetEnumerator() {
+		yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid", "Astrid"}, 500,
+		    new string[]{ "Ångbåt"}, 0};
+		yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid"},           480,
+		    new string[]{ "Polisstation"}, 80};
+	    }
+	    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+	}
+    }
 }

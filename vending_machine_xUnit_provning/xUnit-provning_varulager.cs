@@ -18,7 +18,7 @@ namespace Varuautomat.xUnit_provning {
 	    // Arrange
 	    Modell.Varulager varulager = new Modell.Varulager();
 	    // Act
-	    string[] allaProdukter = varulager.AllaProdukter();
+	    string[] allaProdukter = varulager.AllaProduktersNamn();
 	    // Assert
 	    Assert.DoesNotContain( produktnamn, allaProdukter);
 	}
@@ -34,7 +34,7 @@ namespace Varuautomat.xUnit_provning {
 	    // Arrange
 	    Modell.Varulager varulager = new Modell.Varulager();
 	    // Act
-	    string[] allaProdukter = varulager.AllaProdukter();
+	    string[] allaProdukter = varulager.AllaProduktersNamn();
 	    // Assert
 	    Assert.Contains( produktnamn, allaProdukter);
 	}

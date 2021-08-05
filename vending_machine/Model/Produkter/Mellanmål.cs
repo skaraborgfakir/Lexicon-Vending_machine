@@ -3,18 +3,18 @@ using Varuautomat.Modell;
 
 namespace Varuautomat.Modell {
     class Mellanmål : Produkt, IAvseddAttÄtas {
-	// public override int Pris {
-	//     get { return base.pris; }
-	//     set { base.pris = value; }
-	// }
-
 	public Mellanmål( string namn, int önskatPris) {
-	    base.Namn = namn;
-	    base.Pris = önskatPris;
+	    Namn = namn;
+	    Pris = önskatPris;
 	}
-
 	public string NäringsInformation() {
-	    return "närande";
+	    return "Innehåller fibrer och kolhydrater";
+	}
+	public override string Examine() {
+	    return "Innehåller fibrer och kolhydrater";
+	}
+	public override string Use() {
+	    return "Den är närande och stärkande. Ät upp den !";
 	}
     }
 }

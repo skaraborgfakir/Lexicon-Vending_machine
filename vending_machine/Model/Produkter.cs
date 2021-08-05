@@ -13,5 +13,7 @@ namespace Varuautomat.Modell {
 	    get { return namn;}
 	    set { namn = value;}
 	}
+	public abstract string Examine();
+	public abstract string Use();
     }
 }

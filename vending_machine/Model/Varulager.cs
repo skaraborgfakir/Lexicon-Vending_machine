@@ -17,7 +17,7 @@ namespace Varuautomat.Modell {
 
 	public Varulager() {
 	    /// this.varulager = new Produkt[0];
-	    varulager = new Dictionary<Produkt, int>();
+	    varulager = new Dictionary<Produkt, int>();   ///  Produkt -> befintligt på lagret
 
 	    this.varulager.Add( new Dryck("Coca Cola", 12), 20);
 	    this.varulager.Add( new Dryck("Te", 8), 120);
@@ -39,24 +39,110 @@ namespace Varuautomat.Modell {
 	    this.varulager.Add( new Mellanmål("Äpple",      10), 20);
 	}
 
-	public string[] AllaProdukter() {
+	public Produkt[] AllaProdukter() {
+	    Produkt[] allaProdukter = new Produkt[varulager.Count];
+	    int i=0;
+	    foreach ( KeyValuePair<Produkt,int> post in varulager)
+		allaProdukter[i++]=post.Key;
+	    return allaProdukter;
+	}
+	public Produkt[] VissaProdukter(Produkttyper söktTyp) {
+	    Produkt[] vissaProdukter = new Produkt[0];
+	    foreach ( KeyValuePair<Produkt,int> post in varulager) {
+		bool träff=false;
+		switch(söktTyp) {
+		    case Produkttyper.dricka:
+			if (post.Key is Dryck) {
+			    träff = true;
+			}
+			break;
+		    case Produkttyper.lego:
+			if (post.Key is Lego) {
+			    träff = true;
+			}
+			break;
+		    case Produkttyper.leksak:
+			if (post.Key is Leksak) {
+			    träff = true;
+			}
+			break;
+		    case Produkttyper.mellanmål:
+			if (post.Key is Mellanmål) {
+			    träff = true;
+			}
+			break;
+		    case Produkttyper.choklad:
+			if (post.Key is Choklad) {
+			    träff = true;
+			}
+			break;
+		}
+		if (träff) {
+		    Produkt[] utökad=new Produkt[vissaProdukter.Length+1];
+		    Array.Copy(vissaProdukter, utökad, vissaProdukter.Length);
+		    utökad[vissaProdukter.Length]=post.Key;
+		    vissaProdukter=utökad;
+		}
+	    }
+	    return vissaProdukter;
+	}
+
+	public string[] AllaProduktersNamn() {
 	    string[] produkter = new string[varulager.Count];
 	    int      i=0;
-
 	    foreach ( KeyValuePair<Produkt,int> post in varulager)
 		produkter[i++]=post.Key.Namn;
-
 	    return produkter;
+	}
+	public string[] VissaProduktersNamn(Produkttyper söktTyp) {
+	    string[] namnen = new string[0];
+	    foreach ( KeyValuePair<Produkt,int> post in varulager) {
+		bool träff=false;
+		switch(söktTyp) {
+		    case Produkttyper.dricka:
+			if (post.Key is Dryck) {
+			    träff = true;
+			}
+			break;
+		    case Produkttyper.lego:
+			if (post.Key is Lego) {
+			    träff = true;
+			}
+			break;
+		    case Produkttyper.leksak:
+			if (post.Key is Leksak) {
+			    träff = true;
+			}
+			break;
+		    case Produkttyper.mellanmål:
+			if (post.Key is Mellanmål) {
+			    träff = true;
+			}
+			break;
+		    case Produkttyper.choklad:
+			if (post.Key is Choklad) {
+			    träff = true;
+			}
+			break;
+		}
+		if (träff) {
+		    string[] utökad=new string[namnen.Length+1];
+		    Array.Copy(namnen, utökad, namnen.Length);
+		    utökad[namnen.Length]=post.Key.Namn;
+		    namnen=utökad;
+		}
+	    }
+	    return namnen;
 	}
 
 	/// <summary>iterering över enbart en viss produkttyp
 	/// </summary>
-	public string[] AllaProdukter(Produkttyper söktTyp) {
+	public string[] AllaProduktersNamn(Produkttyper söktTyp) {
 	    string[] produkter = new string[0];
-	    bool     träff=false;
 	    string   namn="";
 
 	    foreach ( KeyValuePair<Produkt,int> post in varulager) {
+		bool träff=false;
 		switch(söktTyp) {
 		    case Produkttyper.dricka:
 			if (post.Key is Dryck) {
@@ -91,15 +177,6 @@ namespace Varuautomat.Modell {
 			break;
 		}
 
-		// else if (typ == Lego && (post.Key as Lego))
-		//     träff = true;
-		// else if (typ == Leksak && post.Key as Leksak)
-		//     träff = true;
-		// else if (typ == Mellanmål && post.Key as Mellanmål)
-		//     träff = true;
-		// else if (typ == Choklad && post.Key as Choklad)
-		//     träff = true;
-
 		if (träff) {
 		    string[] förlängd=new string[produkter.Length+1];
 		    Array.Copy(produkter, förlängd, produkter.Length);
@@ -108,11 +185,10 @@ namespace Varuautomat.Modell {
 		    träff=false;
 		}
 	    }
-
 	    return produkter;
 	}
 
-	/// <summary>kontrollera om en produkt finns utan att bry sig om den är dryck eller ngt annat
+	/// <summary>kontrollera om en produkt finns utan att bry sig om den är dryck eller ngt annat eller deras antal
 	/// </summary>
 	public bool finnsProdukten(string namn) {
 	    foreach ( KeyValuePair<Produkt,int> post in varulager) {
@@ -120,8 +196,27 @@ namespace Varuautomat.Modell {
 		    return true;
 		}
 	    }
-
 	    return false;
+	}
+
+	/// <summary>Mata fram produkten
+	/// </summary>
+	public Produkt levereraProdukt(string namn) {
+	    foreach ( KeyValuePair<Produkt,int> post in varulager)
+		if (post.Key.Namn == namn)
+		    return  post.Key;
+
+	    throw new ArgumentException("Obefintlig produkt");  // produkten måste finnas
+	}
+
+	/// <summary> produktens pris
+	/// </summary>
+	public int pris(string namn) {
+	    foreach ( KeyValuePair<Produkt,int> post in varulager)
+		if (post.Key.Namn == namn)
+		    return post.Key.Pris;
+
+	    throw new ArgumentException("Obefintlig produkt");  // produkten måste finnas
 	}
     }
 }

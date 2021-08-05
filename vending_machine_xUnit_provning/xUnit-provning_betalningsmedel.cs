@@ -207,6 +207,7 @@ namespace Varuautomat.xUnit_provning {
 	[Theory]
 	[InlineData( "Ingmar" )]
 	public void KontrolleraSorteringEfterValör( string namn1) {
+	    _ = namn1;
 	    // Arrange
 	    bool resultat = true;
 	    int  tidigareValör = 0;

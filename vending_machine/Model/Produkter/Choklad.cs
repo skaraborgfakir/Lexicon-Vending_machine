@@ -3,21 +3,18 @@ using Varuautomat.Modell;
 
 namespace Varuautomat.Modell {
     class Choklad : Produkt, IAvseddAttÄtas {
-	// public override int Pris {
-	//     get { return base.pris; }
-	//     set { base.pris = value; }
-	// }
-
 	public Choklad( string namn, int önskatPris) {
-	    base.Namn = namn;
-	    base.Pris = önskatPris;
+	    Namn = namn;
+	    Pris = önskatPris;
 	}
-
-	// public string Namn() { get { return base.pris;}}
-	// }
-
 	public string NäringsInformation() {
-	    return "sött, kan ha en skarp bitter chokladsmak";
+	    return "Innehåller kakaosmör";
+	}
+	public override string Examine() {
+	    return "sött, kan ha en skarp bitter chokladsmak " + "pris " + pris;
+	}
+	public override string Use() {
+	    return "Den är stärkande och glädjande. Ät upp den och bli gladare !";
 	}
     }
 }

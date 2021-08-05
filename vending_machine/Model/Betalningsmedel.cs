@@ -30,10 +30,10 @@ namespace Varuautomat.Modell {
 	    }
 	}
 
-	public static PengJämförare AllokeraJämförare()
-	{
-	    return new Peng.PengJämförare();
-	}
+	// public static PengJämförare AllokeraJämförare()
+	// {
+	//     return new Peng.PengJämförare();
+	// }
 
 	//
 	// normal vanlig som ska jämföra efter namn
@@ -113,67 +113,57 @@ namespace Varuautomat.Modell {
 	//  1 kungen i profil, från vänster  19,5         1-krona  "koppar-pläterat stål"
 	//  5 kungens namnchiffer           23,75         5-krona  "nordiskt guld"
 	// 10 kungen i profil, från vänster  20,5         10-krona "nordiskt guld"
-	List<Peng> accepteradValörer = new List<Peng>();
-
 	//   20   Astrid
 	//   50   Evert
 	//  100   Greta
 	//  200   Ingmar
 	//  500   Birgit Nilsson
 	// 1000   Dag Hammarskjöld
-	// List<Sedel> accepteradeSedlar = new List<Sedel>();
+	List<Peng> accepteradValörer = new List<Peng>();
 
 	public AccepteradeBetalningsmedel() {
 	    //
-	    // huller om buller för att kunna kontrollera att sorteringen av dem fungerar
+	    // huller om buller för att kunna kontrollera att sorteringen av de sedan fungerar
 	    //
-	    accepteradValörer.Add(new Mynt(    "kungen",  1, 19.50F, "kungen i profil, från vänster", "koppar-pläterat stål, kopparfärgat"));  // från Oskar II: mynt med kungens profil
+	    accepteradValörer.Add(new Mynt(  "5-krona",   5, 23.75F, "kungens namnchiffer",           "nordiskt guld"));
+	    accepteradValörer.Add(new Mynt(  "10-krona", 10, 20.50F, "kungen i profil, från vänster", "nordiskt guld"));
+	    accepteradValörer.Add(new Mynt(  "kungen",    1, 19.50F, "kungen i profil, från vänster", "koppar-pläterat stål, kopparfärgat"));  // från Oskar II: mynt med kungens profil
+
+	    accepteradValörer.Add(new Sedel( "Greta",   100, "Greta Garbo",      "Stockholm, Gamla stanvy"));
+	    accepteradValörer.Add(new Sedel( "Ingmar",  200, "Ingmar Bergman",   "Gotland, Gotlandsraukar"));
 	    accepteradValörer.Add(new Sedel( "Astrid",   20, "Astrid Lindgren",  "Småland, Linnés egen blomma - Linnea"));
 	    accepteradValörer.Add(new Sedel( "Evert",    50, "Evert Taube",      "Bohuslän, båt från hällristning"));
-	    accepteradValörer.Add(new Sedel( "Greta",   100, "Greta Garbo",      "Stockholm, Gamla stanvy"));
-
-	    accepteradValörer.Add(new Mynt(  "5-krona",   5, 23.75F, "kungens namnchiffer",           "nordiskt guld"));
-	    accepteradValörer.Add(new Mynt( "10-krona",  10, 20.50F, "kungen i profil, från vänster", "nordiskt guld"));
-
-	    accepteradValörer.Add(new Sedel( "Ingmar",  200, "Ingmar Bergman",   "Gotland, Gotlandsraukar"));
 	    accepteradValörer.Add(new Sedel( "Birgit",  500, "Birgit Nilsson",   "Skåne, Öresundsbron"));
 	    accepteradValörer.Add(new Sedel( "Dag",    1000, "Dag Hammarskjöld", "Laponia"));
 
 	    accepteradValörer.Sort(JämförValör);
 	}
 
+	// låt myntinkastet få veta om något är OK
 	public bool accepterasMyntet(string namn) {
-	    bool resultat = false;
 	    foreach (Peng peng in accepteradValörer)
-		if ((peng is Mynt) &
-		    (namn==peng.Namn)) {
-		    resultat=true;
-		    break;
+		if ((peng is Mynt) & (namn==peng.Namn)) {
+		    return true;
 		}
-	    return resultat;
+	    return false;
 	}
 	public bool accepterasSedeln(string namn) {
-	    bool resultat = false;
 	    foreach (Peng peng in accepteradValörer)
-		if ((peng is Sedel) &
-		    (namn == peng.Namn)) {
-		    resultat = true;
-		    break;
+		if ((peng is Sedel) & (namn == peng.Namn)) {
+		    return true;
 		}
-	    return resultat;
+	    return false;
 	}
-
-	public string[] allaAccepteradeBetalningsmedel() {
-	    int i = 0;
-	    string[] allaAccepteradeBetalningsmedel  = new string[accepteradValörer.Count];
+	public bool accepterasPeng(string namn) {
 	    foreach (Peng peng in accepteradValörer)
-		allaAccepteradeBetalningsmedel[i++]=peng.Namn;
-
-	    return allaAccepteradeBetalningsmedel;
+		if (namn == peng.Namn) {
+		    return true;
+		}
+	    return false;
 	}
 
 	//
-	// returnera en matris/lista med all accepterade sedlar
+	// returnera en matris/lista med namnen all accepterade mynt
 	//
 	public string[] allaAccepteradeMynt() {
 	    int      i=0;
@@ -190,9 +180,8 @@ namespace Varuautomat.Modell {
 
 	    return allaMynt;
 	}
-
 	//
-	// returnera en matris/lista med all accepterade sedlar
+	// returnera en matris/lista med namnen för alla accepterade sedlar
 	//
 	public string[] allaAccepteradeSedlar() {
 	    int    i=0;
@@ -209,8 +198,19 @@ namespace Varuautomat.Modell {
 
 	    return allaSedlar;
 	}
+	//
+	// returnera en matris/lista med namnen för alla accepterade sedlar
+	//
+	public string[] allaAccepteradeBetalningsmedel() {
+	    int i = 0;
+	    string[] allaAccepteradeBetalningsmedel  = new string[accepteradValörer.Count];
+	    foreach (Peng peng in accepteradValörer)
+		allaAccepteradeBetalningsmedel[i++]=peng.Namn;
 
-	/// <summary> sortera valörer i stigande ordning
+	    return allaAccepteradeBetalningsmedel;
+	}
+
+	/// <summary> sortera valörer i sjunkande ordning
 	/// </summary>
 	private static int JämförValör(Peng lhs, Peng rhs) {
 	    if (lhs==null) {
