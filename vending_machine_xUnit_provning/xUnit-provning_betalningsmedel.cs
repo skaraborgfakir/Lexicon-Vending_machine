@@ -210,7 +210,6 @@ namespace Varuautomat.xUnit_provning {
 	    // Arrange
 	    _ = namn1;
 	    bool resultat = true;
-	    int  tidigareValör = 0;
 
 	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    string[] derasNamn = accepteradeBetalningsmedel.allaAccepteradeBetalningsmedel();

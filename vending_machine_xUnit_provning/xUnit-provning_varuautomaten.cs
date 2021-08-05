@@ -184,11 +184,12 @@ namespace Varuautomat.xUnit_provning {
 	/// </summary>
 	[Theory]
 	[ClassData(typeof(EttKöp))]
-	public void GenomförtKöp(string[] blandadeValörer, string[] saker, int förväntatSaldo, int förväntadFörsäljning) {
+	public void GenomförtKöp(string[] blandadeValörer, string[] saker, int förväntatSaldo, int förväntadFörsäljning, int förväntadVäxelSumma) {
 	    _ = förväntatSaldo;
 	    _ = förväntadFörsäljning;
 
 	    // Arrange
+	    AccepteradeBetalningsmedel accepteradeBetalningsmedel = new AccepteradeBetalningsmedel();
 	    Modell.Varuautomat varuautomat = new Modell.Varuautomat();
 	    foreach (string valör in blandadeValörer) varuautomat.InsertMoney( valör);
 	    Console.WriteLine( "efter inmatning av pengar " + varuautomat.KundSaldo);
@@ -199,19 +200,23 @@ namespace Varuautomat.xUnit_provning {
 	    Dictionary <string, int> växel = varuautomat.EndTransaction();
 
 	    Dictionary <string, int>.KeyCollection växelPeng = växel.Keys;
-
-	    foreach (string pengnamn in växelPeng)
-		Console.WriteLine( "Växelpengens namn: " + pengnamn + " antal som växel: "+ växel[pengnamn] );
+	    int växelSumma = 0;
+	    foreach (string pengnamn in växelPeng) {
+		Console.WriteLine( "Växelpengens namn: " + pengnamn + " antal som växel: "+ växel[pengnamn] + " delsumma: " +  växel[pengnamn] * accepteradeBetalningsmedel.Värde(pengnamn) );
+		växelSumma = växelSumma + växel[pengnamn] * accepteradeBetalningsmedel.Värde(pengnamn);
+	    }
 
 	    //Assert
 	    Assert.Equal( 0, varuautomat.KundSaldo);
+	    Assert.Equal( växelSumma, förväntadVäxelSumma);
 	}
 
 	public class EttKöp : IEnumerable<object[]> {
 	    public IEnumerator<object[]> GetEnumerator() {
-		yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid", "Astrid"}, new string[]{ },                0, 0};
-		yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid", "Astrid"}, new string[]{ "Ångbåt"},        0, 500};
-		yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid"},           new string[]{ "Polisstation"}, 80, 400};
+		yield return new object[] { new string[] { "Astrid", "Astrid"},                                                   new string[]{ "Coca Cola", "Te" }, 40,  20,  20};
+		yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid", "Astrid"}, new string[]{ },                    0,   0, 500};
+		yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid", "Astrid"}, new string[]{ "Ångbåt"},            0, 500,   0};
+		yield return new object[] { new string[] { "Ingmar", "Ingmar", "Astrid", "Astrid", "Astrid", "Astrid"},           new string[]{ "Polisstation"},     80, 400,  80};
 	    }
 	    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
